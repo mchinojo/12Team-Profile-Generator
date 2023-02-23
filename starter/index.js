@@ -1,17 +1,13 @@
-// const Manager = require("./lib/Manager");
-// const Engineer = require("./lib/Engineer");
-// const Intern = require("./lib/Intern");
-// const inquirer = require("inquirer");
-import inquirer from 'inquirer';
-// const path = require("path");
-import path from 'path';
-// const fs = require("fs");
-import fs from 'fs';
-// const render = require("./src/page-template.js");
-import render from './src/page-template.mjs';
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const inquirer = require("inquirer");
+const path = require("path");
+const fs = require("fs");
+const render = require("./src/page-template.js");
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
-const OUTPUT_DIR = path.resolve(new URL('output/', import.meta.url).pathname);
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 
@@ -37,7 +33,7 @@ function promptTeamManager() {
             },
             {
                 type: 'input',
-                name: 'number',
+                name: 'officeNumber',
                 message: "What is the team manager's office number?",
             },
         ])
@@ -81,7 +77,7 @@ function promptEngineer() {
             },
             {
                 type: 'input',
-                name: 'gitHub',
+                name: 'github',
                 message: "What is the team engineer's GitHub username?",
             },
         ])
@@ -120,31 +116,35 @@ function promptIntern() {
 
 
 let employeeData = [];
-let manager = await promptTeamManager();
-employeeData.push(manager);
-let menuResponse = await promptMenu();
 
-if (menuResponse.menu === 'Add an engineer') {
-    let engineer = await promptEngineer();
-    employeeData.push(engineer);
-    menuResponse = await promptMenu();
-} else if (menuResponse.menu === 'Add an intern') {
-    let intern = await promptIntern();
-    employeeData.push(intern);
-    menuResponse = await promptMenu();
-} else if (menuResponse.menu === 'Finish building the team') {
-    const data = render(employeeData);
+async function startProgram() {
+    let manager = await promptTeamManager();
+    employeeData.push(manager);
+    let menuResponse = await promptMenu();
 
-    fs.writeFile(outputPath, data, function (err) {
+    if (menuResponse.menu === 'Add an engineer') {
+        let engineer = await promptEngineer();
+        employeeData.push(engineer);
+        menuResponse = await promptMenu();
+    } else if (menuResponse.menu === 'Add an intern') {
+        let intern = await promptIntern();
+        employeeData.push(intern);
+        menuResponse = await promptMenu();
+    } else if (menuResponse.menu === 'Finish building the team') {
+        const data = render(employeeData);
 
-        if (err) {
-            // If there is an error writing the file, log the error message.
-            console.error(err);
-            return;
-        }
-        // If the file is successfully written, log "Saved!"
-        console.log('Saved!');
-    });
+        fs.writeFile(outputPath, data, function (err) {
 
+            if (err) {
+                // If there is an error writing the file, log the error message.
+                console.error(err);
+                return;
+            }
+            // If the file is successfully written, log "Saved!"
+            console.log('Saved!');
+        });
+    }
+    console.log(employeeData);
 }
-console.log(employeeData);
+
+startProgram();

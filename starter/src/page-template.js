@@ -118,4 +118,4 @@ const render = team => {
     `;
 };
 
-export default render;
+module.exports = render;

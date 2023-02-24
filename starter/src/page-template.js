@@ -80,8 +80,7 @@ const generateTeam = team => {
 }
 
 // exports function to generate entire page
-// module.exports = team => {
-const render = team => {
+module.exports = team => {
 
     return `
     <!DOCTYPE html>
@@ -117,5 +116,3 @@ const render = team => {
 </html>
     `;
 };
-
-module.exports = render;

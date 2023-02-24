@@ -3,15 +3,12 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
-const fs = require("fs");
+const fs = require("fs/promises");
 const render = require("./src/page-template.js");
-
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
 function promptTeamManager() {
 
     return inquirer
@@ -110,41 +107,45 @@ function promptIntern() {
         ])
 };
 
-// let manager = await promptTeamManager();
-// let engineer = await promptEngineer();
-// let intern = await promptIntern();
-
-
 let employeeData = [];
 
 async function startProgram() {
-    let manager = await promptTeamManager();
+    let managerData = await promptTeamManager();
+    let manager = new Manager(
+        managerData.name,
+        managerData.id,
+        managerData.email,
+        managerData.officeNumber
+    );
     employeeData.push(manager);
-    let menuResponse = await promptMenu();
 
-    if (menuResponse.menu === 'Add an engineer') {
-        let engineer = await promptEngineer();
-        employeeData.push(engineer);
-        menuResponse = await promptMenu();
-    } else if (menuResponse.menu === 'Add an intern') {
-        let intern = await promptIntern();
-        employeeData.push(intern);
-        menuResponse = await promptMenu();
-    } else if (menuResponse.menu === 'Finish building the team') {
-        const data = render(employeeData);
+    let menuSelection = await promptMenu();
 
-        fs.writeFile(outputPath, data, function (err) {
+    while (menuSelection.menu !== 'Finish building the team') {
+        if (menuSelection.menu === 'Add an engineer') {
+            let engineerData = await promptEngineer();
+            let engineer = new Engineer(
+                engineerData.name,
+                engineerData.id,
+                engineerData.email,
+                engineerData.github
+            );
+            employeeData.push(engineer);
 
-            if (err) {
-                // If there is an error writing the file, log the error message.
-                console.error(err);
-                return;
-            }
-            // If the file is successfully written, log "Saved!"
-            console.log('Saved!');
-        });
+        } else if (menuSelection.menu === 'Add an intern') {
+            let internData = await promptIntern();
+            let intern = new Intern(
+                internData.name,
+                internData.id,
+                internData.email,
+                internData.school
+            );
+            employeeData.push(intern);
+        }
+        menuSelection = await promptMenu();
     }
-    console.log(employeeData);
+    const data = render(employeeData);
+    await fs.writeFile(outputPath, data);
 }
 
 startProgram();

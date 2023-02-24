@@ -36,7 +36,7 @@ After running the command above, you will be prompted with a series of questions
 
 Here is an image that shows what the application should look like:
 
-![HTML webpage titled “My Team” features five boxes listing employee names, titles, and other key info.](./Assets/14-object-oriented-programming-challenge-demo.png)
+![HTML webpage titled “My Team” features five boxes listing employee names, titles, and other key info.](/assets/14-object-oriented-programming-challenge-demo.png)
 
 The styling in the image is just an example, so I took the liberty of creating my own.
 

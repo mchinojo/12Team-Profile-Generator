@@ -1,0 +1,62 @@
+body {
+    background-color: #FECC9F;
+    font-size: 18px;
+}
+
+.jumbotron {
+    background-color: #FECC9F;
+}
+
+.jumbotron h1 {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 64px;
+    color: #EA2A5B;
+}
+
+.card {
+    background-color: #FECC9F;
+    border-color: black;
+    border-radius: 0;
+}
+
+.card-header {
+    background-color: #FECC9F;
+    padding: 1rem 1.25rem;
+    border-bottom: 0;
+    font-family: 'Fjalla One', sans-serif;
+    color: #EA2A5B;
+}
+
+.card-header h2 {
+    font-size: 35px;
+}
+
+.card-header h3 {
+    font-size: 30px;
+}
+
+.list-group-item {
+    background-color: #FECC9F;
+    border-color: black;
+    border-radius: 0 !important;
+    font-family: 'Cantarell', sans-serif;
+}
+
+a {
+    color: black;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #EA2A5B;
+}
+
+i {
+    font-size: 20px;
+
+}
+
+
+
+/* font-family: 'Cantarell', sans-serif;
+font-family: 'Fjalla One', sans-serif; */
